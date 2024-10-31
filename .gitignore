@@ -6,7 +6,7 @@ bin/
 ui/
 
 # Ignore all dot folders, with below exceptions
-.*/
+# .*/
 
 # VSCode
 # .vscode

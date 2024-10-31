@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug (GDB)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/main",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Build",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "environment": [
+                {
+                    "name": "PATH",
+                    "value": "${env:MINGW_PATH}/bin;${env:PATH}"
+                }
+            ],
+            "setupCommands": [
+                {
+                    "description": "Additional library path",
+                    "text": "set solib-search-path ${env:MINGW_PATH}/bin",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "windows": {
+                "MIMode": "gdb",
+                "miDebuggerPath": "${env:MINGW_PATH}/bin/gdb.exe"
+            },
+            "linux": {
+                "MIMode": "gdb",
+                "miDebuggerPath": "/usr/bin/gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            }
+        }
+    ]
+}
