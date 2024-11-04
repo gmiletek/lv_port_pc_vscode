@@ -11,7 +11,7 @@ This project is pre-configured for VSCode and should work work on Windows, Linux
 Clone the PC project and the related sub modules:
 
 ```bash
-git clone --recursive https://github.com/lvgl/lv_port_pc_vscode
+git clone --recursive https://github.com/gmiletek/lv_port_pc_vscode
 ```
 
 ### Install SDL and build tools
