@@ -1,4 +1,3 @@
-
 /**
  * @file main
  *
@@ -43,6 +42,7 @@ static lv_display_t * hal_init(int32_t w, int32_t h);
  **********************/
 
 extern void freertos_main(void);
+extern void start_gmile(void);
 
 /*********************
  *      DEFINES
@@ -77,7 +77,7 @@ int SDL_main(int argc, char **argv)
 
   #if LV_USE_OS == LV_OS_NONE
 
-  lv_demo_widgets();
+  start_gmile();
 
   while(1) {
     /* Periodically call the lv_task handler.

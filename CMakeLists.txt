@@ -38,12 +38,34 @@ endif()
 # Main include files of the project
 include_directories(${PROJECT_SOURCE_DIR}/main/inc)
 
-# Define options for LVGL with default values (OFF)
-option(LV_USE_DRAW_SDL "Use SDL draw unit" OFF)
-option(LV_USE_LIBPNG "Use libpng to decode PNG" OFF)
-option(LV_USE_LIBJPEG_TURBO "Use libjpeg turbo to decode JPEG" OFF)
-option(LV_USE_FFMPEG "Use libffmpeg to display video using lv_ffmpeg" OFF)
-option(LV_USE_FREETYPE "Use freetype library" OFF)
+# Read LVGL configuration from lv_conf.h
+file(READ "${CMAKE_SOURCE_DIR}/lv_conf.h" LV_CONF_CONTENT)
+
+# Function to parse LVGL options from lv_conf.h
+function(parse_lvgl_option OPTION_NAME)
+    string(REGEX MATCH "#define[\t ]+${OPTION_NAME}[\t ]+([0-9])" _ "${LV_CONF_CONTENT}")
+    if(CMAKE_MATCH_1)
+        set(${OPTION_NAME} ${CMAKE_MATCH_1} PARENT_SCOPE)
+        message(STATUS "${OPTION_NAME} set to: ${CMAKE_MATCH_1}")
+    else()
+        set(${OPTION_NAME} 0 PARENT_SCOPE)
+        message(STATUS "${OPTION_NAME} not found, defaulting to: 0")
+    endif()
+endfunction()
+
+# Parse LVGL options
+parse_lvgl_option(LV_USE_DRAW_SDL)
+parse_lvgl_option(LV_USE_LIBPNG)
+parse_lvgl_option(LV_USE_LIBJPEG_TURBO)
+parse_lvgl_option(LV_USE_FFMPEG)
+parse_lvgl_option(LV_USE_FREETYPE)
+
+# Set CMake options based on parsed values
+set(LV_USE_DRAW_SDL ${LV_USE_DRAW_SDL} CACHE BOOL "Use SDL draw unit" FORCE)
+set(LV_USE_LIBPNG ${LV_USE_LIBPNG} CACHE BOOL "Use libpng to decode PNG" FORCE)
+set(LV_USE_LIBJPEG_TURBO ${LV_USE_LIBJPEG_TURBO} CACHE BOOL "Use libjpeg turbo to decode JPEG" FORCE)
+set(LV_USE_FFMPEG ${LV_USE_FFMPEG} CACHE BOOL "Use libffmpeg to display video" FORCE)
+set(LV_USE_FREETYPE ${LV_USE_FREETYPE} CACHE BOOL "Use freetype library" FORCE)
 
 # Set C and C++ standards
 set(CMAKE_C_STANDARD 99)
@@ -86,6 +108,7 @@ else()
     add_executable(main
         ${PROJECT_SOURCE_DIR}/main/src/main.c
         ${PROJECT_SOURCE_DIR}/main/src/mouse_cursor_icon.c
+        ${PROJECT_SOURCE_DIR}/main/src/demo/gmile.c
     )
 endif()
 

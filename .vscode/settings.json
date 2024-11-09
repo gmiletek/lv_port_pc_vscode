@@ -11,12 +11,12 @@
     "cmake.configureSettings": {
         "CMAKE_C_COMPILER": "${env:MINGW_PATH}/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "${env:MINGW_PATH}/bin/g++.exe",
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": ""
     },
     "cmake.buildArgs": ["-j4"],
 
     // 终端环境设置
     "terminal.integrated.env.windows": {
         "PATH": "${env:MINGW_PATH}/bin;${env:PATH}"
-    }
+    },
 }
